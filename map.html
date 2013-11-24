@@ -1,11 +1,25 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+<style type="text/css">
+   #form{
+    float:left;
+    width:50%;
+   }
+   #description{
+    float:right;
+    width:50%;
+   }
+   #access{
+      display:none;
+    }
+</style>
 <script src="OpenLayers.js"></script>
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <title>Interactive Map</title>
 </head>
 <body>
+<p id="access">0</p>
 <div id="demoMap" style="height:400px"></div>
 <script>
     var map = new OpenLayers.Map("demoMap");
@@ -26,7 +40,7 @@
     var outerCount = 0;
     jQuery.getJSON("safepee.json", function(json){
         jQuery.each(json,function(i,item){
-            longLatsOuter[outerCount] = [json[i].lon,json[i].lat];
+            longLatsOuter[outerCount] = [json[i].lon,json[i].lat,json[i].access,json[i].type];
             outerCount++;
         });
         var size = new OpenLayers.Size(21,25);
@@ -35,25 +49,83 @@
         for (var j= 0;j<outerCount;j++){
             var lon = longLatsOuter[j][0];
             var lat = longLatsOuter[j][1];
+            var access = longLatsOuter[j][2];
             var feature = new OpenLayers.Feature.Vector(
                 new OpenLayers.Geometry.Point(lon, lat).transform(epsg4326, projectTo),
                 {description:'This is the value of<br>the description attribute'} ,
-                {externalGraphic: 'marker.png', graphicHeight: 50, graphicWidth: 42, graphicXOffset:-12, graphicYOffset:-25  }
-            );
-            vectorLayer.addFeatures(feature);
-        }   
+                {externalGraphic: 'marker.png', graphicHeight: 37.5, graphicWidth:31.5, graphicXOffset:-12, graphicYOffset:-25  }
+             );
+             vectorLayer.addFeatures(feature);
+         }
+        OpenLayers.Control.Click = OpenLayers.Class(OpenLayers.Control, {                
+            defaultHandlerOptions: {
+                'single': true,
+                'double': false,
+                'pixelTolerance': 0,
+                'stopSingle': false,
+                'stopDouble': false
+            },
+
+            initialize: function(options) {
+                this.handlerOptions = OpenLayers.Util.extend(
+                    {}, this.defaultHandlerOptions
+                );
+                OpenLayers.Control.prototype.initialize.apply(
+                    this, arguments
+                ); 
+                this.handler = new OpenLayers.Handler.Click(
+                    this, {
+                        'click': this.trigger
+                    }, this.handlerOptions
+                );
+            }, 
+
+            trigger: function(e) {
+                var lonlat = map.getLonLatFromViewPortPx(e.xy);
+                
+               // alert("You clicked near " + lonlat.lat + " N, " +
+               //                           + lonlat.lon + " E");
+            }
+
+        });
         map.addLayer(vectorLayer);
+        var click = new OpenLayers.Control.Click();
+        map.addControl(click);
+        click.activate();
     });
 </script>
 <form name="addRESS" id="form">
-    <label for="address">Street Address:</label>
-    <input type="text" name="Address" id="address"/>
-    <label for="city">City:</label>
-    <input type="text" name="City" id="city"/>
-    <label for="state">State:</label>
-    <input type="text" name="State" id="state"/>
+    <p>
+        <label for="address">Street Address:</label>
+        <input type="text" name="Address" id="address"/>
+    </p>
+    <p>
+        <label for="city">City:</label>
+        <input type="text" name="City" id="city"/>
+    </p>
+    <p>
+        <label for="state">State:</label>
+        <input type="text" name="State" id="state"/>
+    </p>
+    <p>
+        <input type="checkbox" id="accessCheck" name="accessible" value="access"> Accessible
+        </p>
+    <!--<p>
+        <input type="radio" name="sex" value="free">Gender-Free<br>
+        <input type="radio" name="sex" value="gendered">Single Stall or Locking (Gendered)
+        </p> -->
     <input type="submit" value="Submit"/>
 </form>
+<!-- 
+<div id="description">
+    <p>Name: <span id="NAME:"/></p>
+    <p>Street Address: <span id="STREET ADDRESS:"/></p>
+    <p>City: <span id="CITY:"></span></p>
+    <p>Postal Code: <span id="POSTAL:"></span</p>
+    <p>State: <span id="STATE:"></span</p>
+    <p>Country: <span id="COUNTRY:"></span></p>
+    <p>Comment: <span id="COMMENT:"></span></p>
+</div> -->
 <script>
     jQuery("#form").submit(function(e){
         e.preventDefault();
@@ -71,7 +143,22 @@
                 map.setCenter (lonLat, zoom);$
             });
         });
-        
-    });
+        var features = vectorLayer.features;
+        var nodes = features[0].geometry.getVertices();
+        for (var m = 0; m < nodes.length; m++){
+            var lon = nodes[m].x;
+            var lat = nodes[m].y;
+        }
+        for (var k= 0; k<features.length; k++){
+            if (jQuery("#accessCheck").is(':checked')==true){
+                if (longLatsOuter[k][2]=="0"){
+                    jQuery("#OpenLayers_Geometry_Point_"+k).hide();
+               }
+            }else{
+            jQuery("#OpenLayers_Geometry_Point_"+k).show();
+            }
+       }
+        vectorLayer.refresh({force:true});
+});
 </script>
 </body>
