@@ -1,1 +1,169 @@
-Index Page Test
+<!DOCTYPE html>
+
+<html lang="en">
+
+<!-- Head -->
+<head>
+	<meta charset="utf-8" />
+	
+	<title>safestalls</title>
+	
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="title" content="" />
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	
+	<meta property="og:url" content=""/>
+	<meta property="og:title" content=""/> 
+	<meta property="og:type" content="website"/> 
+	<meta property="og:image" content=""/> 
+	<meta property="og:site_name" content=""/> 
+	<meta property="og:description" content=""/>
+	<meta name="viewport" content="initial-scale=1,minimum-scale=1,width=device-width">
+    
+    <!-- Javascript -->
+    <script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
+    
+    <!-- Stylesheets -->
+    <link href='http://fonts.googleapis.com/css?family=Raleway:500,900,200' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="css/index.css" type="text/css" media="screen" />
+
+		<!--[if lt IE 9]>
+			<script type="text/javascript" src="/js/html5shiv.js"></script>
+			<script type="text/javascript" src="/js/selectivizr.js"></script>
+			<script type="text/javascript" src="/js/respond.js"></script>
+		<![endif]-->
+
+</head> <!-- /head -->
+
+<!-- Body -->
+<body>
+
+	<!-- Nav Bar -->
+	<nav>
+		<div class="center">
+			<ul>
+				<li>
+					<a href='#' title="Show Grid" id="gridButton" onclick="return false;">Show Grid</a>
+				</li>
+				<li>
+					<a href="/" id="logo"><img src="http://i.imgur.com/hZcmz9m.gif"></a>
+				</li>
+				<li>
+					<a id="navAbout" title="" href=''>About Us</a>
+					<a id="navFacebook" title="Share On Facebook" href=''>Share on Facebook</a>
+					<a id="navTwitter" title="Share On Twitter" href=''>Share on Twitter</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
+	<!-- Filters -->
+	<header>
+		
+		<nav>
+			<div class="center">
+				<ul>
+					<li>
+
+					</li>
+				</ul>
+				
+			</div>
+		</nav>
+
+	</header>
+
+	<!-- Map -->
+	<container id="map_container">
+		<div id="map_area">
+
+		</div>
+	</container>
+
+	<!-- Footer -->
+	<footer>
+		<div class="center">
+			<section id="meta">
+				<div>This website is entirely opensource and available on github</div>
+			</section>
+		</div>
+	</footer>
+
+		<script type="text/javascript">
+
+			// TOGGLE GRID
+			$('#gridButton').click(function(){
+				if($('#grid').length == 0) {
+					var height = $('body').height();
+					var html = '<article id="grid"><div class="overlay"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></article>';
+					$('body').prepend(html);
+					$('#grid div').css('height', height);
+				}else{
+					$('#grid').remove();
+				}
+			});
+
+			$(window).resize(function() {
+				if($('#grid').length > 0) {
+					var height = $('body').height();
+					$('#grid div').css('height', height);
+				}
+			});
+
+			// CHANGE GRID OVERLAY BEHAVIOUR FOR BROWSERS
+			// THAT DONT SUPPORT "pointer-events: none;" CSS
+			if ($.browser.msie || $.browser.opera) {
+			  $('#grid').live('click', function(){
+			  	$('#grid').remove();
+			  });
+			}
+
+			
+
+			// TOOLTIP
+			var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
+			$('nav a').hover(function(){
+				if (isMobile == false){
+					var pos = $(this).offset();
+	                var title = $(this).attr('title');
+	                if ($.trim(title) == ''){
+	                	return;
+	                }
+	                $(this).data('tipText', title).removeAttr('title');
+	                if($('.tooltip').length == 0) {
+	                	var html = '<p class="tooltip"></p>';
+	                	$('body').append(html);
+	                }
+	                $('.tooltip').html('<div class="arrow"></div><div>'+title+'</div>');
+	                $('.tooltip').css('top', pos.top+55).css('left', pos.left+25);
+	                var width = $('.tooltip').outerWidth();
+	                $('.tooltip').css('margin-left', 0-width*0.5);
+	                $('.tooltip').addClass('show');
+				}
+	        }, function() {
+	        	if (isMobile == false){
+	            	$('.tooltip').removeClass('show');
+	            	$(this).attr('title', $(this).data('tipText'));
+	            }
+	        });
+
+			
+		</script>
+		<script type="text/javascript">
+
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-9052680-6']);
+		  _gaq.push(['_trackPageview']);
+
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+
+		</script>
+
+</body> <!-- /body -->
+
+</html>
