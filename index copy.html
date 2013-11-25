@@ -13,7 +13,6 @@
 	<meta name="title" content="" />
 	<meta name="description" content="" />
 	<meta name="keywords" content="" />
-	<link rel="shortcut icon" href="/favicon.ico">
 	
 	<meta property="og:url" content=""/>
 	<meta property="og:title" content=""/> 
@@ -23,30 +22,14 @@
 	<meta property="og:description" content=""/>
 	<meta name="viewport" content="initial-scale=1,minimum-scale=1,width=device-width">
     
+    <!-- Javascript -->
+	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="OpenLayers.js"></script>
+
+    
     <!-- Stylesheets -->
-	<link rel="stylesheet" href="css/style.css" media="all">
-	<link rel="stylesheet" href="css/html5reset.css" media="all">
-	<link rel="stylesheet" href="css/responsivegridsystem.css" media="all">
-	<link rel="stylesheet" href="css/col.css" media="all">
-	<link rel="stylesheet" href="css/2cols.css" media="all">
-	<link rel="stylesheet" href="css/3cols.css" media="all">
-	<link rel="stylesheet" href="css/4cols.css" media="all">
-	<link rel="stylesheet" href="css/5cols.css" media="all">
-	<link rel="stylesheet" href="css/6cols.css" media="all">
-	<link rel="stylesheet" href="css/7cols.css" media="all">
-	<link rel="stylesheet" href="css/8cols.css" media="all">
-	<link rel="stylesheet" href="css/9cols.css" media="all">
-	<link rel="stylesheet" href="css/10cols.css" media="all">
-	<link rel="stylesheet" href="css/11cols.css" media="all">
-	<link rel="stylesheet" href="css/12cols.css" media="all">
-
-	<!-- Fonts -->
-	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-
-	<!-- Responsive Stylesheets -->
-	<link rel="stylesheet" media="only screen and (max-width: 1024px) and (min-width: 769px)" href="/css/1024.css">
-	<link rel="stylesheet" media="only screen and (max-width: 768px) and (min-width: 481px)" href="/css/768.css">
-	<link rel="stylesheet" media="only screen and (max-width: 480px)" href="/css/480.css">
+    <link href='http://fonts.googleapis.com/css?family=Raleway:500,900,200' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="css/index.css" type="text/css" media="screen" />
 
 		<!--[if lt IE 9]>
 			<script type="text/javascript" src="/js/html5shiv.js"></script>
@@ -54,82 +37,73 @@
 			<script type="text/javascript" src="/js/respond.js"></script>
 		<![endif]-->
 
-	<!-- Javascript -->
-	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-	<script src="js/modernizr-2.5.3-min.js"></script>
-    <script src="OpenLayers.js"></script>
 
 </head> <!-- /head -->
 
 <!-- Body -->
 <body>
-<div id="container">
 
-	<!-- Header -->
-	<div id="header">
-		<div class="col span_1_of_3">
-			<h3>SafeStalls</h3>
+	<!-- Nav Bar -->
+	<nav>
+		<div class="center">
+			<ul>
+				<li>
+					<a href='#' title="Show Grid" id="gridButton" onclick="return false;">Show Grid</a>
+				</li>
+				<li>
+					<a href="/" id="logo"><img src="http://i.imgur.com/hZcmz9m.gif"></a>
+				</li>
+				<li>
+					<a id="navAbout" title="" href=''>About Us</a>
+					<a id="navFacebook" title="Share On Facebook" href=''>Share on Facebook</a>
+					<a id="navTwitter" title="Share On Twitter" href=''>Share on Twitter</a>
+				</li>
+			</ul>
 		</div>
-		<div class="col span_1_of_3">
-			
-		</div>
-		<div class="col span_1_of_3">
-			<div id="link_padding"></div>
-			<a href="">About</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href=""><i class="fa fa-facebook"></i></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href=""><i class="fa fa-twitter"></i></a>
-		</div>
-	</div>
-
-	<!-- Map -->
-	<div id="map_area" class="section">
-		<div id="demoMap"></div>
-	</div>
+	</nav>
 
 	<!-- Filters -->
-	<div id="filters" class="section">
-		<div class="col span_2_of_6">
-			<input type="search" name="search" id="search-basic" value="" />
-		</div>
-		<div class="col span_1_of_6">
-			
-		</div>
-		<div class="col span_1_of_6">
-			
-		</div>
-		<div class="col span_1_of_6">
-			
-		</div>
-		<div class="col span_1_of_6">
-			
-		</div>
-	</div>
-
-	<!-- Body -->
-	<div class="section">
-		<div class="bodehcol span_1_of_4"></div>
-		<div class="bodehcol span_1_of_4"></div>
-		<div class="bodehcol span_1_of_4"></div>
-		<div class="bodehcol span_1_of_4"></div>
-	</div>
 	
+	<header>
+		
+		<form name="addRESS" id="form">
+        	<label for="address">Street Address:</label>
+      		<input type="text" name="Address" id="address"/>
+   			<label for="city">City:</label>
+        	<input type="text" name="City" id="city"/>
+        	<label for="state">State:</label>
+       		<input type="text" name="State" id="state"/>
+        	<input type="checkbox" id="accessCheck" name="accessible" value="access"> Accessible
+    		<!--<p>
+        	<input type="radio" name="sex" value="free">Gender-Free<br>
+        	input type="radio" name="sex" value="gendered">Single Stall or Locking (Gendered)
+        	</p> -->
+    		<input type="submit" value="Submit"/>
+		</form>
+
+	</header>
+
+	<!-- Map -->
+	
+	<container id="map_container">
+		<div id="map_area">
+			<div id="demoMap"></div>
+		</div>
+	</container>
+
 	<!-- Footer -->
+	
+	<!-- <footer>
+		<div class="center">
+			<section id="meta">
+				<div>This website is entirely opensource and available on github    <a HREF="http://saferstalls.github.io/SaferStalls/map.html"> View and search our map </a><br></div>
+			</section>
+		</div>
+	</footer> -->
 
-</div> <!-- /container -->
+	<!-- Scripts -->
 
-
-
-<!-- Javascript at the Bottom -->
-
-		<!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if necessary -->
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-		<script>window.jQuery || document.write('<script src="js/jquery-1.7.2.min.js"><\/script>')</script>
-
-		<!--[if (lt IE 9) & (!IEMobile)]>
-		<script src="js/selectivizr-min.js"></script>
-		<![endif]-->
-
-	<!-- Map Scripts -->
-
-	<script type="text/javascript">
+		<script type="text/javascript">
 
 			// TOGGLE GRID
 			$('#gridButton').click(function(){
@@ -278,7 +252,5 @@
 		    });
 		</script>
 
-	<!-- More Scripts-->
-		<script src="js/responsivegridsystem.js"></script>
-
 </body> <!-- /body -->
+</html> 

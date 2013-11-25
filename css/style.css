@@ -1,0 +1,46 @@
+/* SaferStalls */
+/* */
+/* */
+/* */
+
+body {
+	color: 	
+}
+
+#container {
+	width: 90%;
+	margin: 0 auto;
+}
+
+.section {
+	width: 100%;
+}
+
+/* Header */
+
+	#header {
+		color: #666;
+	}
+
+	#link_padding {
+		height: 19px;
+		width: 100%
+	}
+
+	#header a {
+		font-style: none;
+		color: #777;
+		font-size: 12px;
+	}
+
+/* Map */
+
+	#demoMap {
+		height: 600px;
+		width: 100%;
+	}
+
+/* Filters */
+	#filters
+
+/* Body */
