@@ -8,7 +8,7 @@ body {
 }
 
 #container {
-	width: 90%;
+	max-width: 800px;
 	margin: 0 auto;
 }
 
@@ -23,24 +23,45 @@ body {
 	}
 
 	#link_padding {
-		height: 19px;
+		height: 17px;
 		width: 100%
 	}
+
+	@media all and (max-width: 300px) and (min-width: 1), (min-width: 1151px) {
+ 	
+ 	}
 
 	#header a {
 		font-style: none;
 		color: #777;
-		font-size: 12px;
+		font-size: 17px;
+	}
+
+	#header a:hover {
+		color: #000000;
 	}
 
 /* Map */
 
 	#demoMap {
-		height: 600px;
+		height: 450px;
 		width: 100%;
 	}
 
 /* Filters */
-	#filters
+	#filters {
+		margin-top: 10px;
+	}
+	/* Buttons */
+	#city_search {
+		width: 640px;
+		margin: 0 auto
+	}
+
+	#submit_button {
+		height: 33px;
+		font-size: 14px;
+	}
+
 
 /* Body */
