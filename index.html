@@ -70,19 +70,27 @@
 <!-- Body -->
 <body>
 <div id="container">
-
 	<!-- Header -->
 	<div id="header" class="section">
-		<div id="#header_left" class="col span_1_of_3">
-			<h3 class="logo">SaferStalls</h3>
+		
+		<div class="section">
+			<div class="col span_1_of_3">
+				<h3 class="logo">SaferStalls</h3>
+			</div>
+			<div class="col span_1_of_3">
+			</div>
+			<div class="col span_1_of_3">
+			</div>
 		</div>
-		<div class="col span_1_of_3">
-		</div>
-		<div id="#header_right" class="col span_1_of_3">
-			<div id="link_padding"></div>
-			<a href=""><i class="fa fa-question-circle"></i></a>&nbsp;&nbsp;&nbsp;<a href=""><i class="fa fa-facebook"></i></a>&nbsp;&nbsp;&nbsp;<a href=""><i class="fa fa-twitter"></i></a>
-		</div>
-	</div>
+
+		<div class="section">
+			<div class="col span_2_of_3 subhead">
+				Helping trans* and gender variant people to find a bathroom.
+			</div>
+			<div class="col span_1_of_3">
+			</div>
+		</div>		
+	</div> <!-- /header -->
 
 	<!-- Map -->
 	<div id="map_area" class="section">
@@ -103,12 +111,12 @@
 				<input type="search" id="state" class="search" name="state" placeholder="State" value="" />
 			</div>
 			<div class="col span_1_of_5">
-				<input type="checkbox" id="accessCheck"><span id="accessible_label">&nbsp;Accessible
+				<div id="accessible_padding"></div>
+				<input type="checkbox" id="accessCheck"><span id="accessible_label">&nbsp;Accessible</span>
 			</div>
 			<div class="col span_1_of_5">
 				<input id="submit" type="submit">
 			</div>
-			<div class="col span_1_of_5"></div>
 		</form>
 	</div>
 
@@ -128,7 +136,17 @@
 	
 	<!-- Footer -->
 	<div id="footer" class="section">
-		
+		<div class="container links_container">
+			<div class="col span_1_of_4">
+			</div>
+			<div class="col span_1_of_4">
+				<a href="https://docs.google.com/forms/d/1enIbwcMxmt3vwRkUv8CCuhP3gZ5GF_otQ623SoMETP0/viewform?embedded=true" target="_blank"><i class="fa fa-plus"></i> add bathroom</a>
+			</div>
+			<div class="col span_1_of_4">
+				<a href="https://github.com/SaferStalls/SaferStalls" target="_blank"><i class="fa fa-github"></i> github</a>
+			</div>
+			<div class="col span_1_of_4">
+			</div>
 	</div>
 
 	<!-- Modal -->
