@@ -40,13 +40,14 @@
 	<link rel="stylesheet" href="css/11cols.css" media="all">
 	<link rel="stylesheet" href="css/12cols.css" media="all">
 
-	<!-- Fonts -->
-	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-
 	<!-- Responsive Stylesheets -->
 	<link rel="stylesheet" media="only screen and (max-width: 1024px) and (min-width: 769px)" href="/css/1024.css">
 	<link rel="stylesheet" media="only screen and (max-width: 768px) and (min-width: 481px)" href="/css/768.css">
 	<link rel="stylesheet" media="only screen and (max-width: 480px)" href="/css/480.css">
+
+
+	<!-- Fonts -->
+	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 
 		<!--[if lt IE 9]>
 			<script type="text/javascript" src="/js/html5shiv.js"></script>
@@ -71,13 +72,13 @@
 <div id="container">
 
 	<!-- Header -->
-	<div id="header">
-		<div class="col span_1_of_3">
-			<h3>SafeStalls</h3>
+	<div id="header" class="section">
+		<div id="#header_left" class="col span_1_of_3">
+			<h3 class="logo">SaferStalls</h3>
 		</div>
 		<div class="col span_1_of_3">
 		</div>
-		<div class="col span_1_of_3">
+		<div id="#header_right" class="col span_1_of_3">
 			<div id="link_padding"></div>
 			<a href=""><i class="fa fa-question-circle"></i></a>&nbsp;&nbsp;&nbsp;<a href=""><i class="fa fa-facebook"></i></a>&nbsp;&nbsp;&nbsp;<a href=""><i class="fa fa-twitter"></i></a>
 		</div>
@@ -85,36 +86,47 @@
 
 	<!-- Map -->
 	<div id="map_area" class="section">
+		<div id="top_padding"></div>
 		<div id="demoMap"></div>
 	</div>
 
 	<!-- Filters -->
 	<div id="filters" class="section">
-		<form>
-			<input id="city_search" type="search" name="search" id="search-basic" placeholder="Address, City, State" value="" /><br>
-			<input type="checkbox" id="accessible_button"><label for="accessible_button">Accessible</label>
-			<input type="checkbox" id="gender_free_button"><label for="gender_free_button">Gender-Free</label>
-			<input type="checkbox" id="locking_button"><label for="locking_button">Locking</label>
-			<input id="submit_button" type="submit" value="SUBMIT">
+		<form name="addRESS" id="form">
+			<div class="col span_1_of_5">
+				<input type="search" id="address" class="search" name="address" placeholder="Address" value="" />
+			</div>
+			<div class="col span_1_of_5">
+				<input type="search" id="city" class="search" name="city" placeholder="City" value="" />
+			</div>
+			<div class="col span_1_of_5">
+				<input type="search" id="state" class="search" name="state" placeholder="State" value="" />
+			</div>
+			<div class="col span_1_of_5">
+				<input type="checkbox" id="accessCheck">&nbsp;Accessible
+			</div>
+			<div class="col span_1_of_5">
+				<input id="submit" type="submit">
+			</div>
+			<div class="col span_1_of_5"></div>
 		</form>
 	</div>
 
 	<!-- Body -->
-	<div class="section">
-		<div class="bodehcol span_1_of_4"></div>
-		<div class="bodehcol span_1_of_4"></div>
-		<div class="bodehcol span_1_of_4"></div>
-		<div class="bodehcol span_1_of_4"></div>
-		<div class="bodeh col span_1_of_4"></div>
-		<div class="bodeh col span_1_of_4"></div>
-		<div class="bodeh col span_1_of_4"></div>
-		<div class="bodeh col span_1_of_4"></div>
+	<div id="body" class="section">
+		
 	</div>
 	
 	<!-- Footer -->
+	<div id="footer" class="section">
+		
+	</div>
+
+	<!-- Modal -->
+
+	
 
 </div> <!-- /container -->
-
 
 
 <!-- Javascript at the Bottom -->
@@ -270,26 +282,49 @@
 		    });
 		</script>
 
-	<!-- Buttons -->
-	<script>
- 		$(function() {
-    	$( "#accessible_button" ).button();
-  	});
-  	</script>
+	<!-- Form -->
 
 	<script>
- 		$(function() {
-    	$( "#gender_free_button" ).button();
-  	});
-  	</script>
+	    jQuery("#form").submit(function(e){
+	        e.preventDefault();
+	        var streetAddress = document.getElementById('address').value;
+	        var city = document.getElementById('city').value;
+	        var state = document.getElementById('state').value;
+	        var queryString=encodeURIComponent(String(streetAddress))+","+encodeURIComponent(" "+String(city))+","+encodeURIComponent(" "+String(state));
+	        var jsonADD = "http://nominatim.openstreetmap.org/search/"+queryString+"?format=json&polygon=1&addressdetails=1";
+	        jQuery.getJSON(jsonADD, function(data){
+	            jQuery.each(data, function(i,item){
+	                epsg4326 =  new OpenLayers.Projection("EPSG:4326");
+	                projectTo = map.getProjectionObject();
+	                lonLat = new OpenLayers.LonLat(data[i].lon,data[i].lat).transform(epsg4326, projectTo);
+	                zoom=14;
+	                map.setCenter (lonLat, zoom);$
+	            });
+	        });
+	        var features = vectorLayer.features;
+	        var nodes = features[0].geometry.getVertices();
+	        for (var m = 0; m < nodes.length; m++){
+	            var lon = nodes[m].x;
+	            var lat = nodes[m].y;
+	        }
+	        for (var k= 0; k<features.length; k++){
+	            if (jQuery("#accessCheck").is(':checked')==true){
+	                if (longLatsOuter[k][2]=="0"){
+	                    jQuery("#OpenLayers_Geometry_Point_"+k).hide();
+	               }
+	            }else{
+	            jQuery("#OpenLayers_Geometry_Point_"+k).show();
+	            }
+	       }
+	        vectorLayer.refresh({force:true});
+		});
+	</script>
 
-  	<script>
- 		$(function() {
-    	$( "#locking_button" ).button();
-  	});
-  	</script>
+	<!-- Modal -->
+
+
 
 	<!-- More Scripts-->
-		<script src="js/responsivegridsystem.js"></script>
+	<script src="js/responsivegridsystem.js"></script>
 
 </body> <!-- /body -->

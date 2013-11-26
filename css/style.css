@@ -4,10 +4,12 @@
 /* */
 
 body {
-	color: 	
+	width: 100%;
+	background-color: #E5D4FA;
 }
 
 #container {
+	width: 95%;
 	max-width: 800px;
 	margin: 0 auto;
 }
@@ -22,14 +24,14 @@ body {
 		color: #666;
 	}
 
+	.logo h3 {
+		font-family: helvetica;
+	}
+
 	#link_padding {
 		height: 17px;
 		width: 100%
 	}
-
-	@media all and (max-width: 300px) and (min-width: 1), (min-width: 1151px) {
- 	
- 	}
 
 	#header a {
 		font-style: none;
@@ -41,6 +43,15 @@ body {
 		color: #000000;
 	}
 
+	#header_left {
+		text-align: left;
+		width: 100%;
+	}
+
+	#header_right {
+		text-align: right;
+	}
+
 /* Map */
 
 	#demoMap {
@@ -48,20 +59,46 @@ body {
 		width: 100%;
 	}
 
+
+
 /* Filters */
+	
 	#filters {
 		margin-top: 10px;
+		max-width: 585px;
+		margin: 0 auto;
 	}
+	
 	/* Buttons */
-	#city_search {
-		width: 640px;
+	.search {
+		width: 98%;
 		margin: 0 auto
 	}
 
-	#submit_button {
-		height: 33px;
-		font-size: 14px;
+	#accessCheck {
+
 	}
 
+	#lockingCheck {
+
+	}
 
 /* Body */
+
+/* Modal */
+
+
+/* Mobile */
+
+@media only screen and (max-width : 480px) { 
+
+		#container {
+			width: 100%;
+		}
+
+		#link_padding {
+			margin-top: -30px;
+			width: 100%;
+		}
+
+}
