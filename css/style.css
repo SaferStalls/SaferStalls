@@ -44,15 +44,18 @@ body {
 	}
 
 	#header_left {
-		text-align: left;
-		width: 100%;
+
 	}
 
 	#header_right {
-		text-align: right;
-	}
+
+1	}
 
 /* Map */
+
+	#map_area {
+		margin-bottom: 10px;
+	}
 
 	#demoMap {
 		height: 450px;
@@ -75,15 +78,19 @@ body {
 		margin: 0 auto
 	}
 
-	#accessCheck {
-
+	#accessible_label {
+		font-size: 14px;
 	}
 
-	#lockingCheck {
+/* Content */
 
-	}
+#content {
 
-/* Body */
+}
+
+#content h4 {
+	text-align: left;
+}
 
 /* Modal */
 
@@ -97,8 +104,32 @@ body {
 		}
 
 		#link_padding {
-			margin-top: -30px;
+			margin-top: -40px;
 			width: 100%;
 		}
 
+		#map_area {
+		margin-top: 10px;
+		margin-bottom: 3px;
+		}
+
+		#demoMap {
+			height: 350px;
+		}
+
+		.search {
+			width: 95%;
+		}
+
+		#content h4 {
+			text-align: left;
+			margin-left: 10px;
+}
+}
+
+/* Mobile to 668p */
+
+@media only screen and (max-width : 480px) { 
+
+	
 }
