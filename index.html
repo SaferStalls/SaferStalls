@@ -1,30 +1,366 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="en">
+
+<!-- Head -->
 <head>
-  <title>Safer Stalls</title>
-</head>
+	
+	<meta charset="utf-8" />
+	
+	<title>SaferStalls</title>
+	
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="title" content="" />
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<link rel="shortcut icon" href="/favicon.ico">
+	
+	<meta property="og:url" content=""/>
+	<meta property="og:title" content=""/> 
+	<meta property="og:type" content="website"/> 
+	<meta property="og:image" content=""/> 
+	<meta property="og:site_name" content=""/> 
+	<meta property="og:description" content=""/>
+	<meta name="viewport" content="initial-scale=1,minimum-scale=1,width=device-width">
+    
+    <!-- Stylesheets -->
+	<link rel="stylesheet" href="css/style.css" media="all">
+	<link rel="stylesheet" href="css/html5reset.css" media="all">
+	<link rel="stylesheet" href="css/responsivegridsystem.css" media="all">
+	<link rel="stylesheet" href="css/col.css" media="all">
+	<link rel="stylesheet" href="css/2cols.css" media="all">
+	<link rel="stylesheet" href="css/3cols.css" media="all">
+	<link rel="stylesheet" href="css/4cols.css" media="all">
+	<link rel="stylesheet" href="css/5cols.css" media="all">
+	<link rel="stylesheet" href="css/6cols.css" media="all">
+	<link rel="stylesheet" href="css/7cols.css" media="all">
+	<link rel="stylesheet" href="css/8cols.css" media="all">
+	<link rel="stylesheet" href="css/9cols.css" media="all">
+	<link rel="stylesheet" href="css/10cols.css" media="all">
+	<link rel="stylesheet" href="css/11cols.css" media="all">
+	<link rel="stylesheet" href="css/12cols.css" media="all">
 
+	<!-- Responsive Stylesheets -->
+	<link rel="stylesheet" media="only screen and (max-width: 1024px) and (min-width: 769px)" href="/css/1024.css">
+	<link rel="stylesheet" media="only screen and (max-width: 768px) and (min-width: 481px)" href="/css/768.css">
+	<link rel="stylesheet" media="only screen and (max-width: 480px)" href="/css/480.css">
+
+
+	<!-- Fonts -->
+	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+		<!--[if lt IE 9]>
+			<script type="text/javascript" src="/js/html5shiv.js"></script>
+			<script type="text/javascript" src="/js/selectivizr.js"></script>
+			<script type="text/javascript" src="/js/respond.js"></script>
+		<![endif]-->
+
+	<!-- Javascript -->
+	<!-- jquery -->
+	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+		<!-- jquery ui -->
+		<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+
+	<script src="js/modernizr-2.5.3-min.js"></script>
+    <script src="OpenLayers.js"></script>
+
+</head> <!-- /head -->
+
+<!-- Body -->
 <body>
-<div class="container" style="1200px">
-  <div class ="navigation" style="float:left; width:200px;">
-    NAVIGATION<br>
-    <a HREF="http://saferstalls.github.io/SaferStalls/map.html"> View and search our map </a><br>
-    <a HREF="https://docs.google.com/forms/d/1enIbwcMxmt3vwRkUv8CCuhP3gZ5GF_otQ623SoMETP0/viewform?embedded=true"> Submit new restrooms </a><br>
-    <br><br><br>
-    LINKS<br>
-    <a HREF="http://safe2pee.org/new/"> Safe2Pee's website </a><br>
-    <a HREF="http://wiki.openstreetmap.org/wiki/Tag:amenity%3Dtoilets"> OSM's Toilet listings </a><br>
-    <a HREF="https://github.com/SaferStalls/SaferStalls/tree/master/import"> Scripts to input into OSM </a>
-  </div>
+<div id="container">
+	
+	<!-- Header -->
+	<div id="header" class="section">
+		
+		<div class="section">
+			<div class="col span_1_of_3">
+				<h3 class="logo">SaferStalls</h3>
+			</div>
+			<div class="col span_1_of_3">
+			</div>
+			<div class="col span_1_of_3">
+			</div>
+		</div>
 
-  <div class="content" style="width:800px">
-    <iframe src="http://slid.es/mikelaclemmons/safer-stalls/embed" width="576" height="420" scrolling="no" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+		<div class="section">
+			<div class="col span_2_of_3 subhead">
+				Helping trans* and gender variant people to find a bathroom.
+			</div>
+			<div class="col span_1_of_3">
+			</div>
+		</div>		
+	</div> <!-- /header -->
 
-  </div>
-</div>
+	<!-- Map -->
+	<div id="map_area" class="section">
+
+		<div id="top_padding"></div>
+		<div id="demoMap"></div>
+	
+	</div>
+
+	<!-- Filters -->
+	<div id="filters" class="section">
+
+		<form name="addRESS" id="form">
+			<div class="col span_1_of_5">
+				<input type="search" id="address" class="search" name="address" placeholder="Address" value="" />
+			</div>
+			<div class="col span_1_of_5">
+				<input type="search" id="city" class="search" name="city" placeholder="City" value="" />
+			</div>
+			<div class="col span_1_of_5">
+				<input type="search" id="state" class="search" name="state" placeholder="State" value="" />
+			</div>
+			<div class="col span_1_of_5">
+				<div id="accessible_padding"></div>
+				<input type="checkbox" id="accessCheck"><span id="accessible_label">&nbsp;Accessible</span>
+			</div>
+			<div class="col span_1_of_5">
+			<div id="submit_padding"></div>
+				<input id="submit" type="submit">
+			</div>
+		</form>
+	
+	</div>
+
+	<!-- Body -->
+	<div id="content" class="section">
+		
+		<!-- <h4>Results</h4> -->
+		
+		<div id="results_container" class="section">
+
+		</div>
+
+	</div>
+	
+	<!-- Footer -->
+	<div id="footer" class="section">
+		
+			<div class="col span_1_of_4">
+			</div>
+			<div class="col span_1_of_4 link">
+				<a href="https://docs.google.com/forms/d/1enIbwcMxmt3vwRkUv8CCuhP3gZ5GF_otQ623SoMETP0/viewform?embedded=true" target="_blank"><i class="fa fa-plus"></i> add bathroom</a>
+			</div>
+			<div class="col span_1_of_4 link">
+				<a href="https://github.com/SaferStalls/SaferStalls" target="_blank"><i class="fa fa-github"></i> github</a>
+			</div>
+			<div class="col span_1_of_4">
+	
+	</div>
+
+	<!-- Modal -->
+
+	
+
+</div> <!-- /container -->
+
+
+<!-- Javascript at the Bottom -->
+
+	<!-- Results -->
+
+	<script type="text/javascript">
+
+	</script>
+
+	<!-- Map Scripts -->
+
+	<script type="text/javascript">
+
+			// TOGGLE GRID
+			$('#gridButton').click(function(){
+				if($('#grid').length == 0) {
+					var height = $('body').height();
+					var html = '<article id="grid"><div class="overlay"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></article>';
+					$('body').prepend(html);
+					$('#grid div').css('height', height);
+				}else{
+					$('#grid').remove();
+				}
+			});
+
+			$(window).resize(function() {
+				if($('#grid').length > 0) {
+					var height = $('body').height();
+					$('#grid div').css('height', height);
+				}
+			});
+
+			// CHANGE GRID OVERLAY BEHAVIOUR FOR BROWSERS
+			// THAT DONT SUPPORT "pointer-events: none;" CSS
+			if ($.browser.msie || $.browser.opera) {
+			  $('#grid').live('click', function(){
+			  	$('#grid').remove();
+			  });
+			}
+
+			// TOOLTIP
+			var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
+			$('nav a').hover(function(){
+				if (isMobile == false){
+					var pos = $(this).offset();
+	                var title = $(this).attr('title');
+	                if ($.trim(title) == ''){
+	                	return;
+	                }
+	                $(this).data('tipText', title).removeAttr('title');
+	                if($('.tooltip').length == 0) {
+	                	var html = '<p class="tooltip"></p>';
+	                	$('body').append(html);
+	                }
+	                $('.tooltip').html('<div class="arrow"></div><div>'+title+'</div>');
+	                $('.tooltip').css('top', pos.top+55).css('left', pos.left+25);
+	                var width = $('.tooltip').outerWidth();
+	                $('.tooltip').css('margin-left', 0-width*0.5);
+	                $('.tooltip').addClass('show');
+				}
+	        }, function() {
+	        	if (isMobile == false){
+	            	$('.tooltip').removeClass('show');
+	            	$(this).attr('title', $(this).data('tipText'));
+	            }
+	        });
+
+			
+		</script>
+		
+		<script type="text/javascript">
+
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-9052680-6']);
+		  _gaq.push(['_trackPageview']);
+
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+
+		</script>
+		
+		<script>
+
+			// Map
+	    	var map = new OpenLayers.Map("demoMap");
+		    map.addLayer(new OpenLayers.Layer.OSM());
+		    epsg4326 =  new OpenLayers.Projection("EPSG:4326"); 
+		    projectTo = map.getProjectionObject();
+		    var lonLat = new OpenLayers.LonLat( -122.435189 ,37.7357156666667 ).transform(epsg4326, projectTo);
+		    var zoom=10;
+		    map.setCenter (lonLat, zoom);
+			</script>
+			<script>
+		    //Creates overlay layer of markers
+		    var vectorLayer = new OpenLayers.Layer.Vector("Overlay");
+		    var markers = new OpenLayers.Layer.Markers("Markers");
+		    map.addLayer(markers);
+
+		    var longLatsOuter = new Array();
+		    var outerCount = 0;
+		    jQuery.getJSON("safepee.json", function(json){
+		        jQuery.each(json,function(i,item){
+		            longLatsOuter[outerCount] = [json[i].lon,json[i].lat,json[i].access,json[i].type];
+		            outerCount++;
+		        });
+		        var size = new OpenLayers.Size(21,25);
+		        var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
+		        var icon = new OpenLayers.Icon('http://www.openlayers.org/dev/img/marker.png', size, offset);
+		        for (var j= 0;j<outerCount;j++){
+		            var lon = longLatsOuter[j][0];
+		            var lat = longLatsOuter[j][1];
+		            var access = longLatsOuter[j][2];
+		            var feature = new OpenLayers.Feature.Vector(
+		                new OpenLayers.Geometry.Point(lon, lat).transform(epsg4326, projectTo),
+		                {description:'This is the value of<br>the description attribute'} ,
+		                {externalGraphic: 'marker.png', graphicHeight: 37.5, graphicWidth:31.5, graphicXOffset:-12, graphicYOffset:-25  }
+		             );
+		             vectorLayer.addFeatures(feature);
+		         }
+		        OpenLayers.Control.Click = OpenLayers.Class(OpenLayers.Control, {                
+		            defaultHandlerOptions: {
+		                'single': true,
+		                'double': false,
+		                'pixelTolerance': 0,
+		                'stopSingle': false,
+		                'stopDouble': false
+		            },
+
+		            initialize: function(options) {
+		                this.handlerOptions = OpenLayers.Util.extend(
+		                    {}, this.defaultHandlerOptions
+		                );
+		                OpenLayers.Control.prototype.initialize.apply(
+		                    this, arguments
+		                ); 
+		                this.handler = new OpenLayers.Handler.Click(
+		                    this, {
+		                        'click': this.trigger
+		                    }, this.handlerOptions
+		                );
+		            }, 
+
+		            trigger: function(e) {
+		                var lonlat = map.getLonLatFromViewPortPx(e.xy);
+		                
+		               // alert("You clicked near " + lonlat.lat + " N, " +
+		               //                           + lonlat.lon + " E");
+		            }
+
+		        });
+		        map.addLayer(vectorLayer);
+		        var click = new OpenLayers.Control.Click();
+		        map.addControl(click);
+		        click.activate();
+		    });
+		</script>
+
+	<!-- Form -->
+
+	<script>
+	    jQuery("#form").submit(function(e){
+	        e.preventDefault();
+	        var streetAddress = document.getElementById('address').value;
+	        var city = document.getElementById('city').value;
+	        var state = document.getElementById('state').value;
+	        var queryString=encodeURIComponent(String(streetAddress))+","+encodeURIComponent(" "+String(city))+","+encodeURIComponent(" "+String(state));
+	        var jsonADD = "http://nominatim.openstreetmap.org/search/"+queryString+"?format=json&polygon=1&addressdetails=1";
+	        jQuery.getJSON(jsonADD, function(data){
+	            jQuery.each(data, function(i,item){
+	                epsg4326 =  new OpenLayers.Projection("EPSG:4326");
+	                projectTo = map.getProjectionObject();
+	                lonLat = new OpenLayers.LonLat(data[i].lon,data[i].lat).transform(epsg4326, projectTo);
+	                zoom=14;
+	                map.setCenter (lonLat, zoom);$
+	            });
+	        });
+	        var features = vectorLayer.features;
+	        var nodes = features[0].geometry.getVertices();
+	        for (var m = 0; m < nodes.length; m++){
+	            var lon = nodes[m].x;
+	            var lat = nodes[m].y;
+	        }
+	        for (var k= 0; k<features.length; k++){
+	            if (jQuery("#accessCheck").is(':checked')==true){
+	                if (longLatsOuter[k][2]=="0"){
+	                    jQuery("#OpenLayers_Geometry_Point_"+k).hide();
+	               }
+	            }else{
+	            jQuery("#OpenLayers_Geometry_Point_"+k).show();
+	            }
+	       }
+	        vectorLayer.refresh({force:true});
+		});
+	</script>
+
+	<!-- Modal -->
 
 
 
-</body>
-</html>
+	<!-- More Scripts-->
+	<script src="js/responsivegridsystem.js"></script>
 
+</body> <!-- /body -->

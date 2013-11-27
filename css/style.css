@@ -1,0 +1,195 @@
+/* SaferStalls */
+/* */
+/* */
+/* */
+
+body {
+	width: 100%;
+	background-color: #E5D4FA;
+}
+
+#container {
+	width: 95%;
+	max-width: 800px;
+	margin: 0 auto;
+}
+
+.section {
+	width: 100%;
+}
+
+/* Header */
+
+	#header {
+		color: #666;
+	}
+
+	.logo {
+		font-family: ;
+		text-align: left;
+		letter-spacing: .02em;
+		margin-bottom: -12px;
+	}
+
+	.subhead {
+		text-align: left;
+		font-size: 12px;
+		padding-bottom: 10px;
+
+	}
+
+/* Map */
+
+	#map_area {
+		margin-bottom: 10px;
+	}
+
+	#demoMap {
+		height: 450px;
+		width: 100%;
+	}
+
+
+
+/* Filters */
+	
+	#filters {
+		margin-top: 10px;
+		max-width: 585px;
+		margin: 0 auto;
+	}
+	
+	/* Buttons */
+	.search {
+		width: 95%;
+		height: 25px;
+		margin: 0 auto;
+	}
+
+	#accessible_padding {
+		height: 1px;
+		width: 100%;
+	}
+	
+	#accessible_label {
+		font-size: 14px;
+	}
+
+	#submit_padding {
+		height: 2px;
+	}
+
+	#submit {
+		font-size: 14px;
+		height: 28px;
+		width: 100px;
+		padding-top: 2px;
+		margin-bottom: 25px;
+	}
+
+/* Content */
+
+	#content h4 {
+		text-align: left;
+	}
+
+/* Footer */
+	
+	#footer {
+		height: 60px;
+	}
+
+	#footer a {
+		color: #666;
+		font-size: 12px;
+	}
+
+/* Modal */
+
+
+/* Mobile */
+
+@media only screen and (max-width : 480px) { 
+
+		#container {
+			width: 100%;
+		}
+
+		.logo {
+		text-align: center;
+		letter-spacing: .02em;
+		margin-bottom: -17px;
+		margin-top: 10px;
+		}
+
+		.subhead {
+		text-align: center;
+		font-size: 12px;
+		padding-bottom: 5px;
+		}
+
+		#map_area {
+		margin-bottom: 3px;
+		}
+
+		#demoMap {
+			height: 350px;
+		}
+
+		.search {
+			width: 95%;
+		}
+
+		#accessible_padding {
+		height: 0px;
+		width: 100%;
+		}
+
+		#submit_padding {
+			height: 0px;
+		}
+
+		#submit {
+		font-size: 14px;
+		height: 25px;
+		width: 100px;
+		padding-top: 2px;
+		margin-bottom: 10px;
+		}
+
+		#content h4 {
+			text-align: left;
+			margin-left: 10px;
+		}
+
+}
+
+/* Mobile to 668p */
+
+@media only screen and (min-width : 481px) and (max-width : 668px) {
+	
+
+	#accessible_label {
+		font-size: 12px;
+	}
+
+	.logo {
+		text-align: left;
+		letter-spacing: .02em;
+		margin-bottom: -8px;
+		margin-top: 10px;
+	}
+
+	.subhead {
+		text-align: left;
+		font-size: 12px;
+		margin-bottom: 30px;
+	}
+
+	#submit {
+		font-size: 12px;
+		height: 23px;
+		margin-top: 1px;
+		padding-top: 2px;
+	}
+}
