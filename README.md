@@ -15,6 +15,6 @@ Google scripts should be pasted into a script project on the same google drive a
 In imports we have included some sample scripts from movin data in OSM.  These should not yet be used since OSM community has not signed off on it and more work needs to be done to make sure the data is of good quality and legal.
 
 ##Viewing the site
-Goto <http://saferstalls.github.io/SaferStalls/map.html>
+Goto <http://saferstalls.github.io/SaferStalls/>
 
 More to come....
