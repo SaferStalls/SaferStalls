@@ -61,12 +61,13 @@ body {
 	
 	/* Buttons */
 	.search {
-		width: 98%;
-		margin: 0 auto
+		width: 95%;
+		height: 25px;
+		margin: 0 auto;
 	}
 
 	#accessible_padding {
-		height: 0px;
+		height: 1px;
 		width: 100%;
 	}
 	
@@ -74,37 +75,34 @@ body {
 		font-size: 14px;
 	}
 
+	#submit_padding {
+		height: 2px;
+	}
+
 	#submit {
 		font-size: 14px;
-		height: 25px;
+		height: 28px;
 		width: 100px;
 		padding-top: 2px;
+		margin-bottom: 25px;
 	}
 
 /* Content */
 
-#content {
-
-}
-
-#content h4 {
-	text-align: left;
-}
+	#content h4 {
+		text-align: left;
+	}
 
 /* Footer */
+	
+	#footer {
+		height: 50px;
+	}
 
-.links_container {
-	margin: 0 auto;
-	margin-top: 30px;
-}
-
-.links_container a {
-	color: #222;
-}
-
-.links_container a:hover {
-	color: black;
-}
+	#footer a {
+		color: #666;
+		font-size: 12px;
+	}
 
 /* Modal */
 
@@ -140,6 +138,23 @@ body {
 
 		.search {
 			width: 95%;
+		}
+
+		#accessible_padding {
+		height: 0px;
+		width: 100%;
+		}
+
+		#submit_padding {
+			height: 0px;
+		}
+
+		#submit {
+		font-size: 14px;
+		height: 25px;
+		width: 100px;
+		padding-top: 2px;
+		margin-bottom: 10px;
 		}
 
 		#content h4 {
