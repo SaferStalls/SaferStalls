@@ -1,99 +1,74 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<style type="text/css">
-   #form{
-    float:left;
-    width:50%;
-   }
-   #description{
-    float:right;
-    width:50%;
-   }
+<style type="text/css"> 
+    #form{ 
+        width:100%;
+        border-radius:6px;
+        background: rgba(255, 255, 255, .58);
+        position:absolute;
+        padding-left:1%;
+        padding-top:1%;
+        padding-bottom:1%;
+        top:93%;
+        position:bottom;
+        z-index:1000000;
+    }
+    body,html{
+        width:100%;
+        height:100%;
+        margin:0px;
+    }
+    div#demoMap{
+        width:100%;
+        height:100%;
+    }
    #access{
       display:none;
+  }
+  form#form p{
+      display:inline;
+  }
+  h3.blueHead{
+      background-color:#AFEEEE;
+      margin-top:0px;
+      padding-top:4px;
+      -webkit-margin-after:0.3em;
+  }
+  p{
+      font-size:0.8em;
+      -webkit-margin-before:0px;
+      -webkit-margin-after:0px;
+   }
+    div#featureInfo{
+        width:25%;
+        border-radius:6px;
+        background:rgba(255,255,255,.58);
+        position:absolute;
+        padding-left:1%;
+        padding-top:1%;
+        padding-bottom:1%;
+        top:20%;
+        position:bottom;
+        z-index:1000000000;
     }
 </style>
 <script src="OpenLayers.js"></script>
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <title>Interactive Map</title>
 </head>
-<body>
+<body onload="init()">
 <p id="access">0</p>
-<div id="demoMap" style="height:400px"></div>
-<script>
-    var map = new OpenLayers.Map("demoMap");
-    map.addLayer(new OpenLayers.Layer.OSM());
-    epsg4326 =  new OpenLayers.Projection("EPSG:4326"); 
-    projectTo = map.getProjectionObject();
-    var lonLat = new OpenLayers.LonLat( -122.435189 ,37.7357156666667 ).transform(epsg4326, projectTo);
-    var zoom=10;
-    map.setCenter (lonLat, zoom);
-</script>
-<script>
-    //Creates overlay layer of markers
-    var vectorLayer = new OpenLayers.Layer.Vector("Overlay");
-    var markers = new OpenLayers.Layer.Markers("Markers");
-    map.addLayer(markers);
-
-    var longLatsOuter = new Array();
-    var outerCount = 0;
-    jQuery.getJSON("safepee.json", function(json){
-        jQuery.each(json,function(i,item){
-            longLatsOuter[outerCount] = [json[i].lon,json[i].lat,json[i].access,json[i].type];
-            outerCount++;
-        });
-        var size = new OpenLayers.Size(21,25);
-        var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
-        var icon = new OpenLayers.Icon('http://www.openlayers.org/dev/img/marker.png', size, offset);
-        for (var j= 0;j<outerCount;j++){
-            var lon = longLatsOuter[j][0];
-            var lat = longLatsOuter[j][1];
-            var access = longLatsOuter[j][2];
-            var feature = new OpenLayers.Feature.Vector(
-                new OpenLayers.Geometry.Point(lon, lat).transform(epsg4326, projectTo),
-                {description:'This is the value of<br>the description attribute'} ,
-                {externalGraphic: 'marker.png', graphicHeight: 37.5, graphicWidth:31.5, graphicXOffset:-12, graphicYOffset:-25  }
-             );
-             vectorLayer.addFeatures(feature);
-         }
-        OpenLayers.Control.Click = OpenLayers.Class(OpenLayers.Control, {                
-            defaultHandlerOptions: {
-                'single': true,
-                'double': false,
-                'pixelTolerance': 0,
-                'stopSingle': false,
-                'stopDouble': false
-            },
-
-            initialize: function(options) {
-                this.handlerOptions = OpenLayers.Util.extend(
-                    {}, this.defaultHandlerOptions
-                );
-                OpenLayers.Control.prototype.initialize.apply(
-                    this, arguments
-                ); 
-                this.handler = new OpenLayers.Handler.Click(
-                    this, {
-                        'click': this.trigger
-                    }, this.handlerOptions
-                );
-            }, 
-
-            trigger: function(e) {
-                var lonlat = map.getLonLatFromViewPortPx(e.xy);
-                
-               // alert("You clicked near " + lonlat.lat + " N, " +
-               //                           + lonlat.lon + " E");
-            }
-
-        });
-        map.addLayer(vectorLayer);
-        var click = new OpenLayers.Control.Click();
-        map.addControl(click);
-        click.activate();
-    });
-</script>
+<div id="demoMap"> 
+    <div id="featureInfo">
+        <h3>Address</h3>
+        <p id="address1"></p>
+        <p id="address2"></p>
+        <h3 class="directions">Directions</h3>
+        <p class="directions"></p>
+        <h3 class="comments">Comments</h3>
+        <p class="comments"></p>
+</div>
 <form name="addRESS" id="form">
     <p>
         <label for="address">Street Address:</label>
@@ -110,22 +85,75 @@
     <p>
         <input type="checkbox" id="accessCheck" name="accessible" value="access"> Accessible
         </p>
-    <!--<p>
-        <input type="radio" name="sex" value="free">Gender-Free<br>
-        <input type="radio" name="sex" value="gendered">Single Stall or Locking (Gendered)
-        </p> -->
+    <p>
+        <input type="radio" name="sex" value="free" id="genderFree">Gender-Free
+        <input type="radio" name="sex" value="gendered" id="gendered">Single Stall or Locking (Gendered)
+        </p> 
     <input type="submit" value="Submit"/>
-</form>
-<!-- 
-<div id="description">
-    <p>Name: <span id="NAME:"/></p>
-    <p>Street Address: <span id="STREET ADDRESS:"/></p>
-    <p>City: <span id="CITY:"></span></p>
-    <p>Postal Code: <span id="POSTAL:"></span</p>
-    <p>State: <span id="STATE:"></span</p>
-    <p>Country: <span id="COUNTRY:"></span></p>
-    <p>Comment: <span id="COMMENT:"></span></p>
-</div> -->
+</form></div>
+<script>
+    function init(){
+        var map = new OpenLayers.Map("demoMap");
+        map.addLayer(new OpenLayers.Layer.OSM());
+        epsg4326 =  new OpenLayers.Projection("EPSG:4326"); 
+        projectTo = map.getProjectionObject();
+        var lonLat = new OpenLayers.LonLat( -122.435189 ,37.7357156666667 ).transform(epsg4326, projectTo);
+        var zoom=10;
+        map.setCenter (lonLat, zoom);
+        var vectorLayer = new OpenLayers.Layer.Vector("Overlay");
+        var longLatsOuter = new Array();
+        var outerCount = 0;
+        jQuery.getJSON("safepee.json", function(json){
+            jQuery.each(json,function(i,item){
+                longLatsOuter[outerCount] = [json[i].lon,json[i].lat,json[i].access,json[i].type,json[i].street,json[i].city,json[i].state,json[i].country,json[i].directions,json[i].comment];
+                outerCount++;
+            });
+            var size = new OpenLayers.Size(21,25);
+            var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
+            var icon = new OpenLayers.Icon('http://www.openlayers.org/dev/img/marker.png', size, offset);
+            for (var j= 0;j<outerCount;j++){
+                var lon = longLatsOuter[j][0];
+                var lat = longLatsOuter[j][1];
+                var feature = new OpenLayers.Feature.Vector(
+                    new OpenLayers.Geometry.Point(lon, lat).transform(epsg4326, projectTo),
+                    {access:longLatsOuter[j][2],type:longLatsOuter[j][3],street:longLatsOuter[j][4],city:longLatsOuter[j][5],state:longLatsOuter[j][6],country:longLatsOuter[j][7],directions:longLatsOuter[j][8],comment:longLatsOuter[j][9]},
+                    {externalGraphic: 'marker.png', graphicHeight: 37.5, graphicWidth:31.5, graphicXOffset:-12, graphicYOffset:-25  }
+                    );
+                vectorLayer.addFeatures([feature]);
+            }
+            map.addLayer(vectorLayer);
+        });
+        var controls = {
+            selector: new OpenLayers.Control.SelectFeature(vectorLayer, {onSelect : showDescription,onUnselect:hideDescription})
+        };
+        function showDescription (feature){
+            
+            jQuery('#featureInfo').show();
+            jQuery("#address1").html(feature.attributes.street);
+            jQuery("#address2").html(feature.attributes.city+", "+feature.attributes.state+", "+feature.attributes.country);
+            if (feature.attributes.directions) {
+                jQuery("h3.directions").show();
+                jQuery("p.directions").html(feature.attributes.directions);
+            } else {
+                jQuery("h3.directions").hide();
+                jQuery("p.directions").html("");
+            }
+            if(feature.attributes.comment){
+                jQuery("h3.comments").show();
+                jQuery("p.comments").html(feature.attributes.comment);
+            }else {
+                jQuery("h3.comments").hide();
+                jQuery("p.comments").html("");
+            }
+        }
+        function hideDescription(feature){
+            jQuery("#featureInfo").hide();
+        }
+        map.addControl(controls["selector"]);
+        controls["selector"].activate();
+        jQuery("#featureInfo").hide();
+    }
+</script>
 <script>
     jQuery("#form").submit(function(e){
         e.preventDefault();
@@ -151,11 +179,23 @@
         }
         for (var k= 0; k<features.length; k++){
             if (jQuery("#accessCheck").is(':checked')==true){
-                if (longLatsOuter[k][2]=="0"){
+                if (features[k].attributes["access"]=="0"){
                     jQuery("#OpenLayers_Geometry_Point_"+k).hide();
                }
+            }else if (jQuery("#genderFree").is(":checked")==true){
+                if (features[k].attributes["type"]=="0"){
+                    jQuery("#OpenLayers_Geometry_Point_"+k).hide();
+                }else {
+                    jQuery("#OpenLayers_Geometry_Point_"+k).show();
+                }
+            }else if (jQuery("#gendered").is(":checked")==true){
+                if(features.attributes["type"]=="1"){
+                    jQuery("#OpenLayers_Geometry_Point_"+k).hide();
+                 }else{
+                   jQuery("#OpenLayers_Geometry_Point_"+k).show();
+                 }
             }else{
-            jQuery("#OpenLayers_Geometry_Point_"+k).show();
+             jQuery("#OpenLayers_Geometry_Point_"+k).show();
             }
        }
         vectorLayer.refresh({force:true});
