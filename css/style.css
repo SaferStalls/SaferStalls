@@ -96,7 +96,7 @@ body {
 /* Footer */
 	
 	#footer {
-		height: 50px;
+		height: 60px;
 	}
 
 	#footer a {
@@ -141,12 +141,12 @@ body {
 		}
 
 		#accessible_padding {
-		height: 0px;
+		height: 3px;
 		width: 100%;
 		}
 
 		#submit_padding {
-			height: 0px;
+			height: 3px;
 		}
 
 		#submit {
@@ -154,7 +154,7 @@ body {
 		height: 25px;
 		width: 100px;
 		padding-top: 2px;
-		margin-bottom: 10px;
+		margin-bottom: 8px;
 		}
 
 		#content h4 {
