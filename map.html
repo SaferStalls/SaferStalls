@@ -31,28 +31,28 @@
   form#form p{
       display:inline;
   }
-  h3.blueHead{
+  h4.blueHead{
       background-color:#AFEEEE;
       margin-top:0px;
       padding-top:4px;
       -webkit-margin-after:0.3em;
   }
-  p{
-      font-size:0.8em;
-      -webkit-margin-before:0px;
-      -webkit-margin-after:0px;
-   }
     div#featureInfo{
+      font-size:0.8em;
         width:25%;
         border-radius:6px;
         background:rgba(255,255,255,.58);
         position:absolute;
         padding-left:1%;
-        padding-top:1%;
+        padding-top:0%;
         padding-bottom:1%;
         top:20%;
         position:bottom;
         z-index:1000000000;
+        line-height: 1.1em;
+        max-height:60%;
+        overflow:scroll;
+        overflow-x:hidden;
     }
 </style>
 <script src="OpenLayers.js"></script>
@@ -63,12 +63,13 @@
 <p id="access">0</p>
 <div id="demoMap"> 
     <div id="featureInfo">
-        <h3>Address</h3>
-        <p id="address1"></p>
-        <p id="address2"></p>
-        <h3 class="directions">Directions</h3>
+        <h4 id="businessName">Business Name</h3>
+        <p id="businessName"></p>
+        <h4>Address</h3>
+        <p id = "address"></p>
+        <h4 class="directions">Directions</h3>
         <p class="directions"></p>
-        <h3 class="comments">Comments</h3>
+        <h4 class="comments">Comments</h3>
         <p class="comments"></p>
 </div>
 <form name="addRESS" id="form">
@@ -86,7 +87,7 @@
     </p>
     <p>
         <input type="checkbox" id="accessCheck" name="accessible" value="access"> Accessible
-        </p>
+    </p>
     <p>
         <input type="radio" name="sex" value="free" id="genderFree">Gender-Free
         <input type="radio" name="sex" value="gendered" id="gendered">Single Stall or Locking (Gendered)
@@ -107,7 +108,7 @@
         var outerCount = 0;
         jQuery.getJSON("safepee.json", function(json){
             jQuery.each(json,function(i,item){
-                longLatsOuter[outerCount] = [json[i].lon,json[i].lat,json[i].access,json[i].type,json[i].street,json[i].city,json[i].state,json[i].country,json[i].directions,json[i].comment];
+                longLatsOuter[outerCount] = [json[i].lon,json[i].lat,json[i].access,json[i].type,json[i].street,json[i].city,json[i].state,json[i].country,json[i].directions,json[i].comment,json[i].name];
                 outerCount++;
             });
             var size = new OpenLayers.Size(21,25);
@@ -118,7 +119,7 @@
                 var lat = longLatsOuter[j][1];
                 var feature = new OpenLayers.Feature.Vector(
                     new OpenLayers.Geometry.Point(lon, lat).transform(epsg4326, projectTo),
-                    {access:longLatsOuter[j][2],type:longLatsOuter[j][3],street:longLatsOuter[j][4],city:longLatsOuter[j][5],state:longLatsOuter[j][6],country:longLatsOuter[j][7],directions:longLatsOuter[j][8],comment:longLatsOuter[j][9]},
+                    {access:longLatsOuter[j][2],type:longLatsOuter[j][3],street:longLatsOuter[j][4],city:longLatsOuter[j][5],state:longLatsOuter[j][6],country:longLatsOuter[j][7],directions:longLatsOuter[j][8],comment:longLatsOuter[j][9],businessName:longLatsOuter[j][10]},
                     {externalGraphic: 'marker.png', graphicHeight: 37.5, graphicWidth:31.5, graphicXOffset:-12, graphicYOffset:-25  }
                     );
                 vectorLayer.addFeatures([feature]);
@@ -129,22 +130,21 @@
             selector: new OpenLayers.Control.SelectFeature(vectorLayer, {onSelect : showDescription,onUnselect:hideDescription})
         };
         function showDescription (feature){
-            
             jQuery('#featureInfo').show();
-            jQuery("#address1").html(feature.attributes.street);
-            jQuery("#address2").html(feature.attributes.city+", "+feature.attributes.state+", "+feature.attributes.country);
+            jQuery("p#businessName").html(feature.attributes.businessName);
+            jQuery("#address").html(feature.attributes.street+"<br/>"+feature.attributes.city+", "+feature.attributes.state+", "+feature.attributes.country);
             if (feature.attributes.directions) {
-                jQuery("h3.directions").show();
+                jQuery("h4.directions").show();
                 jQuery("p.directions").html(feature.attributes.directions);
             } else {
-                jQuery("h3.directions").hide();
+                jQuery("h4.directions").hide();
                 jQuery("p.directions").html("");
             }
             if(feature.attributes.comment){
-                jQuery("h3.comments").show();
+                jQuery("h4.comments").show();
                 jQuery("p.comments").html(feature.attributes.comment);
             }else {
-                jQuery("h3.comments").hide();
+                jQuery("h4.comments").hide();
                 jQuery("p.comments").html("");
             }
         }
@@ -155,8 +155,6 @@
         controls["selector"].activate();
         jQuery("#featureInfo").hide();
     }
-</script>
-<script>
     jQuery("#form").submit(function(e){
         e.preventDefault();
         var streetAddress = document.getElementById('address').value;
